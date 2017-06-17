@@ -7,6 +7,6 @@ if [ "${1:0:1}" = '-' ]; then
 fi
 
 echo "-> Chowning radicale files"
-chown -R radicale:radicale /data/config /data/db /home/radicale
+chown -R radicale:radicale /data /home/radicale
 echo "-> Starting server"
 exec sudo -u radicale "$@"
