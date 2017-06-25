@@ -1,20 +1,23 @@
 FROM debian:stretch
 
-ENV RADICALE_COMMIT="0122d3ebd5d97852ce30855a96c8ee910e6bc2e3"
+ENV RADICALE_COMMIT="a94a3bc7c2a62cecc41d31fb7ab5cb0c13fa4d2b"
+ENV AUTH_LDAP_COMMIT="cc32d985f5b9f9051026d0834eab4c1508365917"
 
 # Base packages
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends --no-install-suggests git wget ca-certificates build-essential python3-dev libffi-dev python3 python3-setuptools python3-pip libffi6 sudo && \
+    apt-get install -y --no-install-recommends --no-install-suggests git ca-certificates python3 python3-setuptools python3-pip sudo && \
     pip3 install pip setuptools wheel --upgrade && \
-    pip3 install passlib bcrypt ldap3 && \
     mkdir -p /data/config && mkdir -p /data/db && \
     git clone "https://github.com/Kozea/Radicale.git" /data/radicale && \
     cd /data/radicale && \
     git checkout -b work $RADICALE_COMMIT && \
-    wget -O /data/radicale/radicale/auth/LDAP3.py "https://raw.githubusercontent.com/rthill/Radicale/7950fb5c57237b22ab401be52e073859ecc0fa0b/radicale/auth/LDAP3.py" && \
-    python3 setup.py install && \
-    cd /data && rm -rf radicale && \
-    apt-get purge -y git wget ca-certificates build-essential python3-dev libffi-dev && \
+    python3 -m pip install --upgrade . && \
+    git clone "https://github.com/marcoh00/radicale-auth-ldap.git" /data/radicale-auth-ldap && \
+    cd /data/radicale-auth-ldap && \
+    git checkout -b work $AUTH_LDAP_COMMIT && \
+    python3 -m pip install --upgrade . && \
+    cd /data && rm -rf radicale radicale-auth-ldap && \
+    apt-get purge -y git ca-certificates && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/cache/apt/* && \
