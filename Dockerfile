@@ -1,6 +1,6 @@
 FROM debian:stretch
 
-ENV RADICALE_COMMIT="0122d3ebd5d97852ce30855a96c8ee910e6bc2e3"
+ENV RADICALE_COMMIT="6336ffba6ed1a4bb533adc95afad6320109e1ef9"
 
 # Base packages
 RUN apt-get update && \
