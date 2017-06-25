@@ -1,0 +1,13 @@
+[Unit]
+Description=radicale container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run --name radicale -p 5232:5232 -v "{{ confpath }}:/data/config/config" -v "{{ rightspath }}:/data/config/rights" marcoh00/radicale
+ExecStop=/usr/bin/docker stop -t 5 radicale
+ExecStopPost=/usr/bin/docker rm -f radicale
+
+[Install]
+WantedBy=default.target
