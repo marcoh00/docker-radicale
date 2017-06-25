@@ -38,4 +38,4 @@ EXPOSE 5232
 VOLUME ["/data/db", "/data/config"]
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["radicale", "-C", "/data/config/config"]
+CMD ["radicale", "-C", "/data/config/config", "-H", "0.0.0.0:5232"]
