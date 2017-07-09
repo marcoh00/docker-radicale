@@ -6,7 +6,7 @@ ENV AUTH_LDAP_COMMIT="cc32d985f5b9f9051026d0834eab4c1508365917"
 # Base packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends --no-install-suggests git ca-certificates python3 python3-setuptools python3-pip sudo && \
-    pip3 install pip setuptools wheel --upgrade && \
+    python3 -m pip install --upgrade pip setuptools wheel && \
     mkdir -p /data/config && mkdir -p /data/db && \
     git clone "https://github.com/Kozea/Radicale.git" /data/radicale && \
     cd /data/radicale && \
